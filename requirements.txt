@@ -1,0 +1,6 @@
+langchain
+langgraph
+openai
+oracledb
+psycopg2-binary
+python-dotenv
