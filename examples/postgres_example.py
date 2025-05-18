@@ -3,30 +3,6 @@ from db_utils.postgres_utils import get_schema_metadata_pg, format_schema_contex
 from agents.postgres_agent import QueryGraphState
 from dotenv import load_dotenv
 load_dotenv()
-import psycopg2
-
-def listar_tabelas_pg(host, port, dbname, user, password, schema="public"):
-    conn = psycopg2.connect(
-        host=host, port=port, dbname=dbname, user=user, password=password
-    )
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        SELECT table_name
-        FROM information_schema.tables
-        WHERE table_schema = %s
-    """, (schema,))
-    
-    tabelas = cursor.fetchall()
-    conn.close()
-
-    if not tabelas:
-        print("⚠️ Nenhuma tabela encontrada no schema:", schema)
-    else:
-        print(f"📂 Tabelas no schema '{schema}':")
-        for t in tabelas:
-            print("  -", t[0])
-
 
 
 
@@ -40,13 +16,6 @@ if __name__ == "__main__":
         "password": "admin",
         "schema": "public"
     }
-
-    listar_tabelas_pg(
-    config["host"], config["port"], config["dbname"],
-    config["user"], config["password"],
-    config["schema"]
-)
-
 
 
     user_input = "Liste todos os clientes com pedidos pendentes"
